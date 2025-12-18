@@ -8,17 +8,16 @@ int	ft_strlen(char *str) {
 }
 
 void	ft_swap(char *s1, char *s2) {
-	char	tmp;
-
-	tmp = *s1;
+	char	tmp = *s1;
+	
 	*s1 = *s2;
 	*s2 = tmp;
 }
 
 void	ft_sort(char *str) {
-	int	i= 0;
-	
-	while (str[i]) {
+	int len = ft_strlen(str);
+	int i = 0;
+	while (i < len) {
 		if (str[i + 1] && str[i] > str[i + 1]) {
 			ft_swap(&str[i], &str[i + 1]);
 			i = 0;
@@ -27,21 +26,24 @@ void	ft_sort(char *str) {
 	}
 }
 
-void	ft_permute(int start, char *str) {
-	if (start == ft_strlen(str))
+
+void	ft_solve(int start, int len, char *str) {
+	if (start == len)
 		puts(str);
-	int i = start;
-	while (i < ft_strlen(str)) {
+	int	i = start;
+	while (i < len) {
 		ft_swap(&str[i], &str[start]);
-		ft_permute(start + 1, str);
+		ft_solve(start + 1,len, str);
 		ft_swap(&str[i], &str[start]);
 		i++;
 	}
 }
 
-int	main(int argc, char**argv) {
+
+int	main(int argc, char **argv) { 
 	if (argc != 2)
 		return (1);
-	ft_sort(argv[1]);
-	ft_permute(0, argv[1]);
+	int	len = ft_strlen(argv[1]);
+
+	ft_solve(0, len, argv[1]);
 }
